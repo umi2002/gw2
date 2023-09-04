@@ -2,7 +2,6 @@ import './App.css';
 
 import { useFetchServerInfo, } from './fetch_server';
 
-// App.js
 function App() {
     const { serverInfo, error, isLoading } = useFetchServerInfo();
 
