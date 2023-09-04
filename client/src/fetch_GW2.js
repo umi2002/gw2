@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-async function fetchServerInfo() {
+async function fetchGW2Info() {
     try {
         const response = await fetch('http://localhost:3001/gw2');
         if (!response.ok) {
@@ -14,7 +14,7 @@ async function fetchServerInfo() {
     }
 }
 
-function useFetchServerInfo() {
+function useGW2InfoFetch() {
     const [serverInfo, setServerInfo] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +22,7 @@ function useFetchServerInfo() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const data = await fetchServerInfo();
+                const data = await fetchGW2Info();
                 setServerInfo(data);
             } catch (error) {
                 setError(error);
@@ -36,5 +36,5 @@ function useFetchServerInfo() {
     return { serverInfo, error, isLoading };
 }
 
-export { useFetchServerInfo };
+export { useGW2InfoFetch };
 
