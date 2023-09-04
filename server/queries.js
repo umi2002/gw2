@@ -13,10 +13,10 @@ async function fetchGW2Root(req, res) {
     }
 }
 
-function setupRoute(route, app) {
-    app.get(route, fetchGW2Root);
+function setupGW2Route(app) {
+    app.get("/gw2", fetchGW2Root);
 }
 
 export {
-    setupRoute
+    setupGW2Route
 }
