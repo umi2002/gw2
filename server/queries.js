@@ -4,7 +4,8 @@ import { GW2_ROOT } from "./constants.js";
 
 async function fetchGW2Root(req, res) {
     try {
-        const jsonData = await fetch(GW2_ROOT);
+        const data = await fetch(GW2_ROOT);
+        const jsonData = await data.json();
         res.json(jsonData);
     } catch (error) {
         console.error('Error fetching API data:', error);
