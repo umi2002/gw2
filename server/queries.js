@@ -1,22 +1,22 @@
-import fetch from "node-fetch";
-
-import { GW2_ROOT } from "./constants.js";
-
-async function fetchGW2Root(req, res) {
-    try {
-        const data = await fetch(GW2_ROOT);
-        const jsonData = await data.json();
-        res.json(jsonData);
-    } catch (error) {
-        console.error('Error fetching API data:', error);
-        res.status(500).json({ error: 'Internal server error' });
+function createApiDataFetcher(apiEndpoint) {
+    async function fetchAndRespondApiData(req, res, next) {
+        try {
+            const data = await fetch(apiEndpoint);
+            const jsonData = await data.json();
+            res.json(jsonData);
+        } catch (error) {
+            console.error('Error fetching API data:', error);
+            next(new Error('Internal server error'));
+        }
     }
+
+    return fetchAndRespondApiData;
 }
 
-function setupGW2Route(app) {
-    app.get("/gw2", fetchGW2Root);
+function setupRoute(app, routePath, apiEndpoint) {
+    app.get(routePath, createApiDataFetcher(apiEndpoint));
 }
 
 export {
-    setupGW2Route
+    setupRoute
 }
