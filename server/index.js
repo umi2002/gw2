@@ -1,12 +1,11 @@
 import express from "express";
 
-import { PORT } from "./constants.js";
-import { GW2_ROOT } from "./constants.js";
-import { setupRoute } from "./queries.js";
+import { PORT, ROOT_ROUTE } from "./constants.js";
+import { setupItemRoutes } from "./setup_routes.js";
 
 const app = express();
 
-setupRoute(app, "/gw2", GW2_ROOT + "/items");
-app.listen(PORT, () => {
+setupItemRoutes(app, ROOT_ROUTE);
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`Listening on port ${PORT}`);
 });

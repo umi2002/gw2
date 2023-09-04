@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 function createApiDataFetcher(apiEndpoint) {
     async function fetchAndRespondApiData(req, res, next) {
         try {
@@ -5,7 +7,7 @@ function createApiDataFetcher(apiEndpoint) {
             const jsonData = await data.json();
             res.json(jsonData);
         } catch (error) {
-            console.error('Error fetching API data:', error);
+            console.error('Error fetching API data from endpoint:', apiEndpoint, 'Error:', error);
             next(new Error('Internal server error'));
         }
     }
@@ -13,10 +15,4 @@ function createApiDataFetcher(apiEndpoint) {
     return fetchAndRespondApiData;
 }
 
-function setupRoute(app, routePath, apiEndpoint) {
-    app.get(routePath, createApiDataFetcher(apiEndpoint));
-}
-
-export {
-    setupRoute
-}
+export default createApiDataFetcher;
