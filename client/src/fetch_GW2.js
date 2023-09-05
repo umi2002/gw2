@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
-async function fetchGW2Info() {
+async function fetchGW2Info(dataRoute) {
     try {
-        const response = await fetch('http://localhost:3001/gw2');
+        const response = await fetch('http://localhost:3001/gw2' + dataRoute);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -14,7 +14,7 @@ async function fetchGW2Info() {
     }
 }
 
-function useGW2InfoFetch() {
+function useGW2InfoFetch(dataRoute) {
     const [serverInfo, setServerInfo] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +22,7 @@ function useGW2InfoFetch() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const data = await fetchGW2Info();
+                const data = await fetchGW2Info(dataRoute);
                 setServerInfo(data);
             } catch (error) {
                 setError(error);
