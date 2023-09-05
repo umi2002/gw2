@@ -13,11 +13,18 @@ class ItemSearch extends InputBox {
             error: null
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this);
     }
 
-    async handleChange(event) {
+    handleChange(event) {
         super.handleChange(event);
+    }
+
+    handleKeyDown(event) {
+        if (event.key === "Enter") {
+            this.handleButtonClick();
+        }
     }
 
     async handleButtonClick() {
@@ -49,6 +56,7 @@ class ItemSearch extends InputBox {
                     type="text"
                     value={this.state.inputValue}
                     onChange={this.handleChange}
+                    onKeyDown={this.handleKeyDown}
                     placeholder="Search for an item"
                 />
                 <button onClick={this.handleButtonClick}>Search</button>
