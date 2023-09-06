@@ -1,69 +1,44 @@
 import { ROOT_ROUTE, ITEMS_ROUTE } from "../constants";
 
+import React, { useState, useEffect } from "react";
 import InputBox from "../components/input_box";
 import ItemRenderer from "./item_renderer";
+import { useGW2InfoFetch } from "../fetch_GW2";
 
-class ItemSearch extends InputBox {
-    constructor(props) {
-        super(props);
-        this.state = {
-            ...this.state,
-            itemData: null,
-            itemLoaded: false,
-            error: null
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.handleButtonClick = this.handleButtonClick.bind(this);
+function ItemSearch() {
+    const [inputValue, setInputValue] = useState("");
+    const [itemRoute, setItemRoute] = useState(null);
+    const { serverInfo, error, isLoading } = useGW2InfoFetch(itemRoute);
+
+    if (error && error.message === "Network response was not ok") {
+        error.message = "No item matches that ID.";
     }
 
-    handleChange(event) {
-        super.handleChange(event);
-    }
-
-    handleKeyDown(event) {
+    function handleKeyDown(event) {
         if (event.key === "Enter") {
-            this.handleButtonClick();
+            HandleButtonClick();
         }
     }
 
-    async handleButtonClick() {
-        const itemRoute = ROOT_ROUTE + ITEMS_ROUTE + "/" + this.state.inputValue;
-        try {
-            const response = await fetch(itemRoute);
-            if (response.status === 404) {
-                this.setState({ error: "No item matches that ID", itemLoaded: false });
-                return; // exit early
-            }
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            this.setState({ itemData: data, itemLoaded: true, error: null });
-        }
-        catch (error) {
-            console.error("Error fetching data:", error);
-            this.setState({ error: error.message, itemLoaded: false });
-        }
+    function HandleButtonClick() {
+        setItemRoute(ROOT_ROUTE + ITEMS_ROUTE + "/" + inputValue);
     }
 
-    render() {
-        return (
-            <div>
-                <input
-                    type="text"
-                    value={this.state.inputValue}
-                    onChange={this.handleChange}
-                    onKeyDown={this.handleKeyDown}
-                    placeholder="Search for an item"
-                />
-                <button onClick={this.handleButtonClick}>Search</button>
-                <p>{this.state.error}</p>
-                {this.state.itemLoaded && <ItemRenderer itemKey={this.state.inputValue} data={this.state.itemData} />}
-            </div>)
-    }
+    console.log(serverInfo);
+
+    return (
+        <div>
+            <InputBox
+                inputValue={inputValue}
+                placeHolder="Search for an item"
+                setInputValue={setInputValue}
+                handleKeyDown={handleKeyDown}
+            />
+            <button onClick={HandleButtonClick}>Search</button>
+            <p> {error ? error.message : null} </p>
+            {!isLoading && <ItemRenderer data={serverInfo} />}
+        </div>
+    )
 }
 
 export default ItemSearch;

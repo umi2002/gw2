@@ -1,13 +1,28 @@
 function ItemRenderer({ itemKey, data }) {
-    if (typeof data === 'object' && data !== null) {
+    if (Array.isArray(data)) {
+        return (
+            <ul>
+                {data.map((item, index) => (
+                    <li key={index}>
+                        <ItemRenderer data={item} />
+                    </li>
+                ))}
+            </ul>
+        );
+    }
+    else if (typeof data === 'object' && data !== null) {
         return (
             <div>
                 {Object.entries(data).map(([key, value]) => (
-                    <ItemRenderer key={key} itemKey={key} data={value} />
+                    <div key={key}>
+                        <strong>{key}:</strong>
+                        <ItemRenderer itemKey={key} data={value} />
+                    </div>
                 ))}
             </div>
         );
-    } else {
+    }
+    else {
         return <p>{itemKey}: {data}</p>;
     }
 }
