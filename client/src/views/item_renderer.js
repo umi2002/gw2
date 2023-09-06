@@ -1,29 +1,21 @@
-function ItemRenderer({ itemKey, data }) {
-    if (Array.isArray(data)) {
+function objectRenderer([key, value]) {
+    return (
+        <li key={key}>
+            <strong>{key}</strong>: <ItemRenderer data={value} />
+        </li>
+    );
+}
+
+function ItemRenderer({ data }) {
+    if (typeof data === 'object' && data !== null) {
         return (
             <ul>
-                {data.map((item, index) => (
-                    <li key={index}>
-                        <ItemRenderer data={item} />
-                    </li>
-                ))}
+                {Object.entries(data).map(objectRenderer)}
             </ul>
         );
     }
-    else if (typeof data === 'object' && data !== null) {
-        return (
-            <div>
-                {Object.entries(data).map(([key, value]) => (
-                    <div key={key}>
-                        <strong>{key}:</strong>
-                        <ItemRenderer itemKey={key} data={value} />
-                    </div>
-                ))}
-            </div>
-        );
-    }
     else {
-        return <p>{itemKey}: {data}</p>;
+        return <span> {data} </span>;
     }
 }
 
