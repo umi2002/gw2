@@ -17,13 +17,11 @@ async function fetchGW2Info(dataRoute) {
 function useGW2InfoFetch(dataRoute) {
     const [serverInfo, setServerInfo] = useState(null);
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
 
     async function fetchData() {
         try {
             const data = await fetchGW2Info(dataRoute);
             setServerInfo(data);
-            setIsLoading(false);
             setError(null);
         } catch (error) {
             setError(error);
@@ -34,7 +32,7 @@ function useGW2InfoFetch(dataRoute) {
         fetchData();
     }, [dataRoute]);
 
-    return { serverInfo, error, isLoading };
+    return { serverInfo, error };
 }
 
 export { useGW2InfoFetch };
