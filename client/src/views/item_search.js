@@ -1,6 +1,6 @@
 import { ROOT_ROUTE, ITEMS_ROUTE } from "../constants";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import InputBox from "../components/input_box";
 import ItemRenderer from "./item_renderer";
 import { useGW2InfoFetch } from "../fetch_GW2";
