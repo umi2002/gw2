@@ -1,7 +1,9 @@
+import "./item_renderer.css"
+
 function objectRenderer([key, value]) {
     return (
         <li key={key}>
-            <strong>{key}</strong>: <ItemRenderer className="Item" data={value} />
+            <strong>{key}</strong>: <ItemRenderer data={value} />
         </li>
     );
 }
@@ -13,6 +15,9 @@ function ItemRenderer({ data }) {
                 {Object.entries(data).map(objectRenderer)}
             </ul>
         );
+    }
+    else if (typeof data === 'string' && data.slice(-3) === "png") {
+        return <p> <img src={data} /> </p>;
     }
     else {
         return <span> {data} </span>;

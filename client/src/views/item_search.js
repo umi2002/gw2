@@ -1,3 +1,5 @@
+import "./item_search.css"
+
 import { ROOT_ROUTE, ITEMS_ROUTE } from "../constants";
 
 import React, { useState } from "react";
