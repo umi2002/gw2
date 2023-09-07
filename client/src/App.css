@@ -17,14 +17,3 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
 }
-
-.ItemSearch {
-  background-color: #282c34;
-  padding: 10px;
-  min-height: 10vh;
-  flex-grow: 1;
-}
-
-.Item .li {
-  margin: 100px 100;
-}
