@@ -40,7 +40,7 @@ function ItemSearch() {
             />
             <button onClick={HandleButtonClick}>Search</button>
             <p> {error ? error.message : null} </p>
-            {!error && <ItemRenderer data={serverInfo} />}
+            {!error && <ItemRenderer className="Item" data={serverInfo} />}
         </div>
     )
 }

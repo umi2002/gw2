@@ -24,3 +24,7 @@
   min-height: 10vh;
   flex-grow: 1;
 }
+
+.Item .li {
+  margin: 100px 100;
+}

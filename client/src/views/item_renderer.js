@@ -1,7 +1,7 @@
 function objectRenderer([key, value]) {
     return (
         <li key={key}>
-            <strong>{key}</strong>: <ItemRenderer data={value} />
+            <strong>{key}</strong>: <ItemRenderer className="Item" data={value} />
         </li>
     );
 }
