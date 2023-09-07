@@ -1,6 +1,6 @@
 import "./App.css";
 
-import ItemSearch from './views/item_search';
+import ItemSearch from "./views/item_search";
 
 function App() {
     return (

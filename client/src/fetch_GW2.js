@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 async function fetchGW2Info(dataRoute) {
     try {
         const response = await fetch(dataRoute);
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error("Network response was not ok");
         }
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error fetching server info:', error);
+        console.error("Error fetching server info:", error);
         throw error;
     }
 }

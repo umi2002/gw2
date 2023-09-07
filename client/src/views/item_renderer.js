@@ -9,14 +9,14 @@ function objectRenderer([key, value]) {
 }
 
 function ItemRenderer({ data }) {
-    if (typeof data === 'object' && data !== null) {
+    if (typeof data === "object" && data !== null) {
         return (
             <ul>
                 {Object.entries(data).map(objectRenderer)}
             </ul>
         );
     }
-    else if (typeof data === 'string' && data.slice(-3) === "png") {
+    else if (typeof data === "string" && data.slice(-3) === "png") {
         return <p> <img src={data} /> </p>;
     }
     else {

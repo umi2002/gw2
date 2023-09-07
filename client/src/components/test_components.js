@@ -1,5 +1,5 @@
-import React from 'react';
-import { useFetchServerInfo } from './fetch_server';
+import React from "react";
+import { useFetchServerInfo } from "./fetch_server";
 
 function TestComponent() {
     const serverInfo = useFetchServerInfo();
