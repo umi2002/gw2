@@ -35,7 +35,6 @@ function ItemSearch() {
         <div>
             <div className="ItemSearch">
                 <ItemInputDropDown
-                    className="ItemSearch-inputdropdown"
                     inputValue={inputValue}
                     setInputValue={setInputValue}
                     itemList={itemList}
