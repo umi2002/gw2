@@ -9,17 +9,18 @@ function setupRoute(app, routePath, apiEndpoint) {
 
 async function setupItemRoutes(app, routePath) {
     try {
-        const itemsData = await fetch(GW2_API + ITEMS_ROUTE);
+        const itemsRoutePath = routePath + ITEMS_ROUTE;
+        const itemsApiEndpoint = GW2_API + ITEMS_ROUTE;
+        const itemsData = await fetch(itemsApiEndpoint);
         const itemsJson = await itemsData.json();
-        let itemsRoutePath = routePath + ITEMS_ROUTE;
-        let itemsApiEndpoint = GW2_API + ITEMS_ROUTE;
 
         setupRoute(app, itemsRoutePath, itemsApiEndpoint);
 
         for (const key in itemsJson) {
             const itemId = "/" + itemsJson[key];
-            setupRoute(app, itemsRoutePath + itemId, itemsApiEndpoint + "/" + itemId);
+            setupRoute(app, itemsRoutePath + itemId, itemsApiEndpoint + itemId);
         }
+        console.log("Item routes set up");
     } catch (error) {
         console.error("Error setting up item routes:", error);
     }
@@ -28,4 +29,3 @@ async function setupItemRoutes(app, routePath) {
 export {
     setupItemRoutes
 }
-
