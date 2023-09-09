@@ -1,10 +1,7 @@
-function InputBox({ inputValue, placeHolder, setInputValue, handleKeyDown }) {
-    function handleChange(event) {
-        setInputValue(event.target.value);
-    };
-
+function InputBox({ inputValue, placeHolder, handleChange, handleKeyDown }) {
     return (
         <input
+            className="InputBox"
             type="text"
             value={inputValue}
             placeholder={placeHolder}

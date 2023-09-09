@@ -1,28 +1,25 @@
-import { useState } from 'react';
-
-function DropDown(props) {
-    const [selectedValue, setSelectedValue] = useState('');
-
-    function handleChange(event) {
-        setSelectedValue(event.target.value);
-    }
-
-    const handleChangeFunction = props.overrideFunction || handleChange;
-
+function DropDown({ data, setInputValue, setShowDropdown, handleChange }) {
+    console.log(setShowDropdown);
     function renderOption(option) {
-        return <option value={option}>{option}</option>;
+        function handleClick() {
+            setInputValue(option);
+            handleChange({ target: { value: option } });
+            setShowDropdown(false);
+        }
+
+        return <li onClick={handleClick}>{option}</li>;
     }
 
     function setOptions() {
-        return props.data.map(renderOption);
+        return data.map(renderOption);
     }
 
     return (
-        <div>
-            <select value={selectedValue} onChange={handleChangeFunction}>
+        <span>
+            <ul>
                 {setOptions()}
-            </select>
-        </div>
+            </ul>
+        </span>
     );
 }
 

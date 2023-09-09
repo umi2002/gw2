@@ -1,4 +1,4 @@
-import "./App.css";
+import "./css/App.css";
 
 import ItemSearch from "./views/item_search";
 
@@ -10,9 +10,9 @@ function App() {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 Query Guild Wars 2 API
             </header>
-            <body>
+            <main className="App-main">
                 <ItemSearch />
-            </body>
+            </main>
         </div>
     );
 }

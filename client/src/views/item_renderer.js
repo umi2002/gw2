@@ -1,4 +1,4 @@
-import "./item_renderer.css"
+import "../css/item_renderer.css"
 
 function objectRenderer([key, value]) {
     return (

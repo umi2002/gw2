@@ -1,12 +1,11 @@
-import "./item_search.css"
+import "../css/item_search.css"
 
 import { ROOT_ROUTE, ITEMS_ROUTE } from "../constants";
 
 import { useState } from "react";
-import InputBox from "../components/input_box";
 import ItemRenderer from "./item_renderer";
 import { useGW2InfoFetch } from "../fetch_GW2";
-import ItemDropDown from "./item_dropdown";
+import ItemInputDropDown from "./item_input_dropdown";
 
 function ItemSearch() {
     const [inputValue, setInputValue] = useState("");
@@ -33,21 +32,21 @@ function ItemSearch() {
     }
 
     return (
-        <div className="ItemSearch">
-            <InputBox
-                inputValue={inputValue}
-                placeHolder="Search for an item"
-                setInputValue={setInputValue}
-                handleKeyDown={handleKeyDown}
-            />
-            <ItemDropDown
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                itemList={itemList || []}
-            />
-            <button onClick={HandleButtonClick}>Search</button>
-            <p> {error ? error.message : null} </p>
-            {!error && <ItemRenderer className="Item" data={itemInfo} />}
+        <div>
+            <div className="ItemSearch">
+                <ItemInputDropDown
+                    className="ItemSearch-inputdropdown"
+                    inputValue={inputValue}
+                    setInputValue={setInputValue}
+                    itemList={itemList}
+                    handleKeyDown={handleKeyDown}
+                />
+                <button className="ItemSearch-button" onClick={HandleButtonClick}>Search</button>
+            </div>
+            <div className="Item">
+                <p> {error ? error.message : null} </p>
+                {!error && <ItemRenderer data={itemInfo} />}
+            </div>
         </div>
     )
 }
