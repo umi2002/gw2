@@ -1,4 +1,3 @@
-import React from "react";
 import { useFetchServerInfo } from "./fetch_server";
 
 function TestComponent() {

@@ -1,5 +1,3 @@
-import React from "react";
-
 function InputBox({ inputValue, placeHolder, setInputValue, handleKeyDown }) {
     function handleChange(event) {
         setInputValue(event.target.value);
