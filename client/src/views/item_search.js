@@ -32,8 +32,6 @@ function ItemSearch() {
         setItemRoute(ROOT_ROUTE + ITEMS_ROUTE + "/" + inputValue);
     }
 
-    console.log(itemInfo);
-
     return (
         <div className="ItemSearch">
             <InputBox
