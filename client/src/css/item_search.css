@@ -1,6 +1,7 @@
 .ItemSearch {
     display: flex;
     padding: 10px;
+    justify-content: center;
     align-items: flex-start;
 }
 
@@ -11,4 +12,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.Item {
+    justify-content: left;
 }
