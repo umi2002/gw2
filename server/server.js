@@ -1,7 +1,7 @@
 import express from "express";
-import { PORT, ROOT_ROUTE } from "./constants.js";
+import { PORT, ROOT_ROUTE } from "../utils/routes.js";
 import { setupItems } from "./setup_routes.js";
-
+await import("dotenv/config");
 
 async function main() {
     const app = express();
