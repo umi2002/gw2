@@ -1,0 +1,8 @@
+#nav-bar {
+    width: 100%;
+}
+
+#nav-bar a {
+    position: absolute;
+    color: orange;
+}

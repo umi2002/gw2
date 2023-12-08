@@ -1,11 +1,19 @@
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-function DropDownItem({ item, handleClick }) {
+function DropDownItem({ item }) {
+    const navigate = useNavigate();
+
+    function handleClick() {
+        navigate(`/items/${item.id}`);
+    }
+
     return (
         <>
-            <li id="dropdown-item" value={item.id} onClick={handleClick}>
-                {item.name}
-            </li>
+            <div onMouseDown={handleClick}>
+                <li id="dropdown-item" value={item.id}>
+                    {item.name}
+                </li>
+            </div>
         </>
     );
 }

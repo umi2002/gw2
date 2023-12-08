@@ -6,7 +6,7 @@ import "../assets/css/SearchBar.css";
 function SearchBar() {
     const [query, setQuery] = useState("");
     const [items, setItems] = useState([]);
-    const [inputValue, setInputValue] = useState("");
+    const [isDropDownVisible, setIsDropDownVisible] = useState(false);
 
     useEffect(() => {
         const timeOutId = setTimeout(async () => {
@@ -27,10 +27,17 @@ function SearchBar() {
 
     async function handleSubmit(event) {
         event.preventDefault();
+        await filterItemsByName(query);
     }
 
-    async function handleClick(event) {
-        console.log(event.target.value);
+    function onFocus() {
+        setIsDropDownVisible(true);
+    }
+
+    function onBlur() {
+        setTimeout(() => {
+            setIsDropDownVisible(false);
+        }, 100);
     }
 
     return (
@@ -41,8 +48,11 @@ function SearchBar() {
                         type="text"
                         placeholder="Search for an item"
                         onChange={handleChange}
+                        value={query}
+                        onFocus={onFocus}
+                        onBlur={onBlur}
                     />
-                    <DropDown items={items} onClick={handleClick}/>
+                    {isDropDownVisible && <DropDown items={items} />}
                 </div>
                 <div id="search-button-container">
                     <button type="submit" onClick={handleSubmit}>

@@ -1,9 +1,14 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
+import Item from "./pages/Item";
+import NavBar from "./components/NavBar";
 import "./assets/css/App.css";
 
 function App() {
-    const routes = [{ path: "/", element: <Home /> }];
+    const routes = [
+        { path: "/", element: <Home /> },
+        { path: "/items/:id", element: <Item /> },
+    ];
 
     return (
         <BrowserRouter>
@@ -16,17 +21,16 @@ function App() {
                     />
                     Query Guild Wars 2 API
                 </header>
-                <main id="App-main">
-                    <Routes>
-                        {routes.map((route, index) => (
-                            <Route
-                                key={index}
-                                path={route.path}
-                                element={route.element}
-                            />
-                        ))}
-                    </Routes>
-                </main>
+                <NavBar />
+                <Routes>
+                    {routes.map((route, index) => (
+                        <Route
+                            key={index}
+                            path={route.path}
+                            element={route.element}
+                        />
+                    ))}
+                </Routes>
             </div>
         </BrowserRouter>
     );

@@ -1,10 +1,8 @@
-import SearchBar from "../components/SearchBar";
-
 function Home() {
     return (
-        <>
-            <SearchBar />
-        </>
+        <main id="App-main">
+            <div>Hello</div>
+        </main>
     );
 }
 
