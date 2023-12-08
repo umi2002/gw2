@@ -40,11 +40,12 @@ async function importData(apiEndpoint, client) {
     try {
         const key = data.id;
         const name = data.name;
+        const icon = data.icon;
 
         const collection = client.db(DATABASE_NAME).collection(COLLECTION_NAME);
         await collection.updateOne(
             { id: key },
-            { $set: { name: name } },
+            { $set: { name: name, icon: icon } },
             { upsert: true },
         );
     } catch (error) {
