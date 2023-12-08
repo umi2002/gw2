@@ -1,9 +1,10 @@
-import fetch from "node-fetch";
 import { MongoClient, ServerApiVersion } from "mongodb";
 await import("dotenv/config");
 
 const MONGO_URI = process.env.MONGO_URI;
-const GW2_API_URI = "https://api.guildwars2.com/v2/items";
+const GW2_BASE_URI = "https://api.guildwars2.com/v2/";
+const GW2_ITEMS_ENDPOINT = "items/";
+const GW2_PRICES_ENDPOINT = "commerce/prices/";
 const DATABASE_NAME = "gw2";
 const COLLECTION_NAME = "items";
 
@@ -11,45 +12,54 @@ async function fetchWithExponentialBackoff(endpoint, initialDelay = 1) {
     let delay = initialDelay;
 
     while (true) {
-        try {
-            const response = await fetch(endpoint);
-            if (!response.ok)
+        const response = await fetch(endpoint);
+        if (response.ok) {
+            return await response.json();
+        } else {
+            if (response.status === 404) {
+                return null;
+            } else if (response.status === 429) {
+                console.error(`Fetch failed. Retrying in ${delay} ms...`);
+                await new Promise((res) => setTimeout(res, delay));
+                delay *= 2;
+            } else {
                 throw new Error(
                     `HTTP Error: ${response.status} ${response.statusText}`,
                 );
-
-            return await response.json();
-        } catch (error) {
-            console.error(`Fetch failed. Retrying in ${delay} ms...`);
-            await new Promise((res) => setTimeout(res, delay));
-            delay *= 2;
+            }
         }
     }
 }
 
-async function importData(apiEndpoint, client) {
-    let data;
+async function importData(id, client) {
+    let itemData;
+    let priceData;
     try {
-        console.log("Fetching data from:", apiEndpoint);
-        data = await fetchWithExponentialBackoff(apiEndpoint);
+        console.log("Fetching data from id:", id);
+        itemData = await fetchWithExponentialBackoff(
+            GW2_BASE_URI + GW2_ITEMS_ENDPOINT + id,
+        );
+        priceData = await fetchWithExponentialBackoff(
+            GW2_BASE_URI + GW2_PRICES_ENDPOINT + id,
+        );
     } catch (error) {
         console.error("Failed to fetch data:", error);
         return;
     }
 
     try {
-        const key = data.id;
-        const name = data.name;
-        const icon = data.icon;
-
+        const key = itemData.id;
+        const name = itemData.name;
+        const icon = itemData.icon;
+        const tradeable = priceData !== null;
         const collection = client.db(DATABASE_NAME).collection(COLLECTION_NAME);
         await collection.updateOne(
             { id: key },
-            { $set: { name: name, icon: icon } },
+            { $set: { name: name, icon: icon, tradeable: tradeable } },
             { upsert: true },
         );
     } catch (error) {
-        console.error("Failed to insert data into MongoDB:", error);
+        console.error("Failed to insert itemData into MongoDB:", error);
     }
 }
 
@@ -69,12 +79,14 @@ async function importDb() {
         return;
     }
 
-    const itemsJson = await fetchWithExponentialBackoff(GW2_API_URI);
+    const itemsJson = await fetchWithExponentialBackoff(
+        GW2_BASE_URI + GW2_ITEMS_ENDPOINT,
+    );
 
     console.log("Importing data...");
 
     for (const key in itemsJson) {
-        await importData(GW2_API_URI + "/" + itemsJson[key], client);
+        await importData(itemsJson[key], client);
     }
 
     await client.close();
