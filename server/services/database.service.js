@@ -1,11 +1,13 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
+await import("dotenv/config");
 
 class DatabaseService {
-    constructor(uri) {
-        this.client = new MongoClient(uri, {
+    constructor() {
+        this.client = new MongoClient(process.env.MONGO_URI, {
             useUnifiedTopology: true,
             serverApi: ServerApiVersion.v1,
         });
+        this.db = this.client.db(process.env.DB);
     }
 
     async connect() {
@@ -27,4 +29,6 @@ class DatabaseService {
     }
 }
 
-export default DatabaseService;
+const dbService = new DatabaseService();
+
+export default dbService;
