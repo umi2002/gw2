@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 
-function DropDownItem({ item }) {
-    function handleClick() { }
-
+function DropDownItem({ item, handleClick }) {
     return (
         <>
             <li id="dropdown-item" value={item.id} onClick={handleClick}>

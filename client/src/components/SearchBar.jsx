@@ -6,6 +6,7 @@ import "../assets/css/SearchBar.css";
 function SearchBar() {
     const [query, setQuery] = useState("");
     const [items, setItems] = useState([]);
+    const [inputValue, setInputValue] = useState("");
 
     useEffect(() => {
         const timeOutId = setTimeout(async () => {
@@ -28,16 +29,20 @@ function SearchBar() {
         event.preventDefault();
     }
 
+    async function handleClick(event) {
+        console.log(event.target.value);
+    }
+
     return (
         <>
-            <div>
-                <div id="search-container">
+            <div id="search-container">
+                <div id="search-bar-container">
                     <input
                         type="text"
                         placeholder="Search for an item"
                         onChange={handleChange}
                     />
-                    <DropDown items={items} />
+                    <DropDown items={items} onClick={handleClick}/>
                 </div>
                 <div id="search-button-container">
                     <button type="submit" onClick={handleSubmit}>

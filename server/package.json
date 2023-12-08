@@ -2,7 +2,7 @@
     "name": "gw2-server",
     "version": "1.0.0",
     "description": "A server for providing functionality by making use of the Guild Wars 2 API",
-    "main": "index.js",
+    "main": "server.js",
     "scripts": {
         "start": "nodemon server.js",
         "test": "echo \\\"Error: no test specified\\\" && exit 1"
