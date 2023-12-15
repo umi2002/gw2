@@ -66,7 +66,7 @@ async function importData(id, client) {
         const name = itemData.name;
         const icon = itemData.icon;
         const tradeable = priceData !== null;
-        const recipe = recipeData || [];
+        const recipes = recipeData || [];
         const collection = client.db(DATABASE_NAME).collection(COLLECTION_NAME);
         await collection.updateOne(
             { id: key },
@@ -75,7 +75,7 @@ async function importData(id, client) {
                     name: name,
                     icon: icon,
                     tradeable: tradeable,
-                    recipe: recipe,
+                    recipes: recipes,
                 },
             },
             { upsert: true },
