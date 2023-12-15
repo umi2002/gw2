@@ -1,11 +1,11 @@
 import DropDown from "./DropDown";
-import { useState, useEffect } from "react";
+import SearchContext from "../contexts/SearchContext";
+import { useState, useEffect, useContext } from "react";
 import httpManager from "../assets/js/http_manager.js";
 import "../assets/css/SearchBar.css";
 
 function SearchBar() {
-    const [query, setQuery] = useState("");
-    const [items, setItems] = useState([]);
+    const { query, setQuery, items, setItems } = useContext(SearchContext);
     const [isDropDownVisible, setIsDropDownVisible] = useState(false);
 
     useEffect(() => {
@@ -52,7 +52,7 @@ function SearchBar() {
                         onFocus={onFocus}
                         onBlur={onBlur}
                     />
-                    {isDropDownVisible && <DropDown items={items} />}
+                    {isDropDownVisible && <DropDown />}
                 </div>
                 <div id="search-button-container">
                     <button type="submit" onClick={handleSubmit}>

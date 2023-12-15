@@ -19,6 +19,14 @@ router.get("/:id", async (req, res) => {
     try {
         const id = req.params.id;
         const item = await itemsService.getItemById(id);
+        if (item.tradeable) {
+            const prices = await itemsService.getPricesById(id);
+            item.buys = prices.buys;
+            item.sells = prices.sells;
+        } else {
+            item.buys = {};
+            item.sells = {};
+        }
         res.status(HTTP_STATUS.SUCCESS).json(item);
     } catch (error) {
         res.status(HTTP_STATUS.SERVER_ERROR).json({ error: error });

@@ -1,8 +1,10 @@
+import ApiService from "./api.service.js";
 import dbService from "./database.service.js";
 await import("dotenv/config");
 
 class ItemsService {
     constructor() {
+        this.apiService = new ApiService();
         this.dbService = dbService;
     }
 
@@ -12,6 +14,11 @@ class ItemsService {
 
     async getItemById(id) {
         return await this.items.findOne({ id: parseInt(id) });
+    }
+
+    async getPricesById(id) {
+        const price = await this.apiService.getPricesById(id);
+        return price;
     }
 
     async getItemsByName(name) {

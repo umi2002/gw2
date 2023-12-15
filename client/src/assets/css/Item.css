@@ -1,0 +1,25 @@
+#item-container {
+    display: flex;
+    flex-direction: row;
+    width: 500px;
+    height: 120px;
+    gap: 70px;
+    justify-content: center;
+}
+
+#item-image img {
+    height: 100%;
+}
+
+#item-text {
+    margin: 0;
+}
+
+#item-text p {
+    margin: 0;
+    height: 20px;
+}
+
+.item-recipe {
+    margin: 10px 0px 10px 0px;
+}
