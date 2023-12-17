@@ -1,0 +1,8 @@
+#item-container {
+    display: flex;
+    flex-direction: row;
+    width: 500px;
+    height: 60px;
+    gap: 70px;
+    justify-content: center;
+}

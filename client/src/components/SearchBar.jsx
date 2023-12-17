@@ -1,11 +1,13 @@
 import DropDown from "./DropDown";
 import SearchContext from "../contexts/SearchContext";
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import httpManager from "../assets/js/http_manager.js";
 import "../assets/css/SearchBar.css";
 
 function SearchBar() {
-    const { query, setQuery, setItems } = useContext(SearchContext);
+    const navigate = useNavigate();
+    const { query, setQuery, items, setItems } = useContext(SearchContext);
     const [isDropDownVisible, setIsDropDownVisible] = useState(false);
 
     useEffect(() => {
@@ -27,7 +29,15 @@ function SearchBar() {
 
     async function handleSubmit(event) {
         event.preventDefault();
+        const inputElement = document.querySelector("input");
+        inputElement.blur();
         await filterItemsByName(query);
+        if (items.length === 1) {
+            navigate(`/items/${items[0].id}`);
+            return;
+        } else {
+            navigate(`/items?search=${query}`);
+        }
     }
 
     function onFocus() {
@@ -42,7 +52,7 @@ function SearchBar() {
 
     return (
         <>
-            <div id="search-container">
+            <form id="search-form" onSubmit={handleSubmit}>
                 <div id="search-bar-container">
                     <input
                         type="text"
@@ -55,11 +65,9 @@ function SearchBar() {
                     {isDropDownVisible && <DropDown />}
                 </div>
                 <div id="search-button-container">
-                    <button type="submit" onClick={handleSubmit}>
-                        Search
-                    </button>
+                    <button type="submit">Search</button>
                 </div>
-            </div>
+            </form>
         </>
     );
 }
