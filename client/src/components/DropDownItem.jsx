@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 function DropDownItem({ item }) {
-    const { query, setQuery } = useContext(SearchContext);
+    const { setQuery } = useContext(SearchContext);
     const navigate = useNavigate();
 
     function handleClick() {

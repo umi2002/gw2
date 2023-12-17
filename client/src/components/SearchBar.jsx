@@ -5,7 +5,7 @@ import httpManager from "../assets/js/http_manager.js";
 import "../assets/css/SearchBar.css";
 
 function SearchBar() {
-    const { query, setQuery, items, setItems } = useContext(SearchContext);
+    const { query, setQuery, setItems } = useContext(SearchContext);
     const [isDropDownVisible, setIsDropDownVisible] = useState(false);
 
     useEffect(() => {
