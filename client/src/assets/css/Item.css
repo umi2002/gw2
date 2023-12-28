@@ -1,23 +1,29 @@
-#item-container {
+#items-container {
     display: flex;
-    flex-direction: row;
-    width: 500px;
-    height: 120px;
-    gap: 70px;
-    justify-content: center;
+    flex-direction: column;
 }
 
-#item-image img {
+.item-container {
+    display: flex;
+    flex-direction: row;
+    width: 600px;
+    height: 120px;
+    gap: 70px;
+}
+
+.item-image img {
     height: 100%;
 }
 
-#item-text {
+.item-text {
     margin: 0;
+    width: 100%;
 }
 
-#item-text p {
+.item-text p {
     margin: 0;
     height: 20px;
+    width: 100%;
 }
 
 .item-recipe {
