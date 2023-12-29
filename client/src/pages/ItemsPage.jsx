@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import httpManager from "../assets/js/http_manager";
+import Item from "../components/Item";
 import "../assets/css/Items.css";
 
-function Items() {
+function ItemsPage() {
     const [items, setItems] = useState([]);
     const url = useLocation();
+    const navigate = useNavigate();
     const searchParams = new URLSearchParams(url.search);
     const query = searchParams.get("search");
 
@@ -18,6 +20,10 @@ function Items() {
         setItems(filteredItems);
     }
 
+    async function handleClickItem(id) {
+        navigate(`/items/${id}`);
+    }
+
     return (
         <main id="App-main">
             {items ? (
@@ -25,15 +31,7 @@ function Items() {
                     <div>Search results for {query}</div>
                     <div id="items-container">
                         {items.map((item, index) => (
-                            <div id="item-container" key={index}>
-                                <div id="item-image">
-                                    <img src={item.icon} />
-                                </div>
-                                <div id="item-text">
-                                    <p> Name: {item.name} </p>
-                                    <p> Id: {item.id} </p>
-                                </div>
-                            </div>
+                            <Item id={item.id} isExpanded={false} key={index} />
                         ))}
                     </div>
                 </>
@@ -44,4 +42,4 @@ function Items() {
     );
 }
 
-export default Items;
+export default ItemsPage;

@@ -1,15 +1,15 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
-import Item from "./pages/Item";
-import Items from "./pages/Items";
+import ItemPage from "./pages/ItemPage";
+import ItemsPage from "./pages/ItemsPage";
 import "./assets/css/App.css";
 
 function App() {
     const routes = [
         { path: "/", element: <Home /> },
-        { path: "/items", element: <Items /> },
-        { path: "/items/:id", element: <Item /> },
+        { path: "/items", element: <ItemsPage /> },
+        { path: "/items/:id", element: <ItemPage /> },
     ];
 
     return (
