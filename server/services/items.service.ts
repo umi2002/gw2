@@ -12,9 +12,7 @@ class ItemsService {
   }
 
   get items() {
-    const collection: string = process.env.DB_ITEMS || "";
-
-    return this.dbService.db.collection(collection);
+    return this.dbService.db.collection(process.env.DB_ITEMS as string);
   }
 
   async getItemById(id: string) {

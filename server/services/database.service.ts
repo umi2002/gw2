@@ -6,9 +6,7 @@ class DatabaseService {
   db;
 
   constructor() {
-    const uri: string = process.env.MONGO_URI || "";
-
-    this.client = new MongoClient(uri, {
+    this.client = new MongoClient(process.env.MONGO_URI as string, {
       serverApi: ServerApiVersion.v1,
     });
     this.db = this.client.db(process.env.DB);
