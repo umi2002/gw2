@@ -21,7 +21,7 @@ function Item({ id, isExpanded }: Props) {
   }, [id]);
 
   useEffect(() => {
-    if (item) {
+    if (Object.keys(item).length !== 0) {
       setIsLoaded(true);
     }
   }, [item]);
