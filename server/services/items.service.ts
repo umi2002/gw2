@@ -1,5 +1,7 @@
+import { Collection } from "mongodb";
 import ApiService from "./api.service.js";
 import dbService, { DatabaseService } from "./database.service.js";
+import { ItemType, Ingredient, CommerceData } from "../utils/types.js";
 await import("dotenv/config");
 
 class ItemsService {
@@ -11,30 +13,30 @@ class ItemsService {
     this.dbService = dbService;
   }
 
-  get items() {
+  get items(): Collection<ItemType> {
     return this.dbService.db.collection(process.env.DB_ITEMS as string);
   }
 
-  async getItemById(id: string) {
-    return await this.items.findOne({ id: parseInt(id) });
+  async getItemById(id: number): Promise<ItemType | null> {
+    return await this.items.findOne({ id: id });
   }
 
-  async getPricesById(id: string) {
-    const price = await this.apiService.getPricesById(id);
+  async getPricesById(id: number): Promise<CommerceData | null> {
+    const price: CommerceData | null = await this.apiService.getPricesById(id);
     return price;
   }
 
-  async getItemsByName(name: string) {
+  async getItemsByName(name: string): Promise<ItemType[]> {
     return await this.items.find({ name: name }).toArray();
   }
 
-  async filterItemsByName(name: string) {
+  async filterItemsByName(name: string): Promise<ItemType[]> {
     if (!name) {
       return [];
     }
 
-    const escapedString = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const regex = new RegExp(escapedString, "i");
+    const escapedString: string = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const regex: RegExp = new RegExp(escapedString, "i");
 
     return await this.items
       .find({ name: { $regex: regex } })

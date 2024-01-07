@@ -1,3 +1,5 @@
+import { CommerceData } from "../utils/types.js";
+
 class ApiService {
   baseUrl: string;
   pricesEndpoint: string;
@@ -10,7 +12,7 @@ class ApiService {
   async fetchWithExponentialBackoff(
     endpoint: string,
     initialDelay: number = 1,
-  ) {
+  ): Promise<any> {
     let delay = initialDelay;
 
     while (true) {
@@ -30,12 +32,13 @@ class ApiService {
     }
   }
 
-  async getPricesById(id: string) {
-    const endpoint = `${this.baseUrl}${this.pricesEndpoint}${id}`;
+  async getPricesById(id: number): Promise<CommerceData> {
+    const endpoint: string = `${this.baseUrl}${this.pricesEndpoint}${id}`;
     console.log("Fetching data from:", endpoint);
-    const response = await this.fetchWithExponentialBackoff(endpoint);
+    const response: CommerceData =
+      await this.fetchWithExponentialBackoff(endpoint);
 
-    return await response;
+    return response;
   }
 }
 

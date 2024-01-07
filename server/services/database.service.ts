@@ -1,9 +1,9 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient, ServerApiVersion, Db } from "mongodb";
 await import("dotenv/config");
 
 class DatabaseService {
-  client;
-  db;
+  client: MongoClient;
+  db: Db;
 
   constructor() {
     this.client = new MongoClient(process.env.MONGO_URI as string, {
@@ -12,7 +12,7 @@ class DatabaseService {
     this.db = this.client.db(process.env.DB);
   }
 
-  async connect() {
+  async connect(): Promise<void> {
     try {
       await this.client.connect();
       console.log("Connected to database");
@@ -21,7 +21,7 @@ class DatabaseService {
     }
   }
 
-  async disconnect() {
+  async disconnect(): Promise<void> {
     try {
       await this.client.close();
       console.log("Disconnected from database");
@@ -31,6 +31,6 @@ class DatabaseService {
   }
 }
 
-const dbService = new DatabaseService();
+const dbService: DatabaseService = new DatabaseService();
 
 export { dbService as default, DatabaseService };
